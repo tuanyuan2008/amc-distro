@@ -16,15 +16,15 @@ for i in range(2002, 2018):
     treeB = html.fromstring(pageB.content)
     results = treeA.xpath('//li/text()') + treeB.xpath('//li/text()') # arrays
     for item in results:
-        if item.strip().split() == ['A']:
+        if item.strip().split()[0] == 'A':
             countA12 += 1
-        elif item.strip().split() == ['B']:
+        elif item.strip().split()[0] == 'B':
             countB12 += 1
-        elif item.strip().split() == ['C']:
+        elif item.strip().split()[0] == 'C':
             countC12 += 1
-        elif item.strip().split() == ['D']:
+        elif item.strip().split()[0] == 'D':
             countD12 += 1
-        elif item.strip().split() == ['E']: # precautionary
+        elif item.strip().split()[0] == 'E': # precautionary
             countE12 += 1
 
 freq12 = {"A": countA12, "B": countB12, "C": countC12, "D": countD12, "E": countE12}
@@ -44,15 +44,15 @@ for i in range(2002, 2018):
     treeB10 = html.fromstring(pageB10.content)
     results10 = treeA10.xpath('//li/text()') + treeB10.xpath('//li/text()')
     for item in results10:
-        if item.strip().split() == ['A']:
+        if item.strip().split()[0] == 'A':
             countA10 += 1
-        elif item.strip().split() == ['B']:
+        elif item.strip().split()[0] == 'B':
             countB10 += 1
-        elif item.strip().split() == ['C']:
+        elif item.strip().split()[0] == 'C':
             countC10 += 1
-        elif item.strip().split() == ['D']:
+        elif item.strip().split()[0] == 'D':
             countD10 += 1
-        elif item.strip().split() == ['E']:
+        elif item.strip().split()[0] == 'E':
             countE10 += 1
 
 freq10 = {"A": countA10, "B": countB10, "C": countC10, "D": countD10, "E": countE10}
