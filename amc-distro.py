@@ -32,30 +32,18 @@ total12 = countA12 + countB12 + countC12 + countD12 + countE12
 
 # the frequency of AMC 10 answers from 2002 - 2017
 
-countA10 = 0
-countB10 = 0
-countC10 = 0
-countD10 = 0
-countE10 = 0
+freq10 = {'A': 0, 'B': 0, 'C': 0, 'D': 0, 'E': 0}
 
 for i in range(2002, 2018):
-    treeA10 = html.fromstring(requests.get("https://artofproblemsolving.com/wiki/index.php?title=" + str(i) + "_AMC_10A_Answer_Key").content)
-    treeB10 = html.fromstring(requests.get("https://artofproblemsolving.com/wiki/index.php?title=" + str(i) + "_AMC_10B_Answer_Key").content)
+    pageA10 = requests.get("https://artofproblemsolving.com/wiki/index.php?title=" + str(i) + "_AMC_10A_Answer_Key")
+    pageB10 = requests.get("https://artofproblemsolving.com/wiki/index.php?title=" + str(i) + "_AMC_10B_Answer_Key")
+    treeA10 = html.fromstring(pageA10.content)
+    treeB10 = html.fromstring(pageB10.content)
     results10 = treeA10.xpath('//li/text()') + treeB10.xpath('//li/text()')
     for item in results10:
-        if item.strip().split()[0] == 'A':
-            countA10 += 1
-        elif item.strip().split()[0] == 'B':
-            countB10 += 1
-        elif item.strip().split()[0] == 'C':
-            countC10 += 1
-        elif item.strip().split()[0] == 'D':
-            countD10 += 1
-        elif item.strip().split()[0] == 'E':
-            countE10 += 1
+        freq10[item.strip().split()[0]] += 1
 
-freq10 = {"A": countA10, "B": countB10, "C": countC10, "D": countD10, "E": countE10}
-total10 = countA10 + countB10 + countC10 + countD10 + countE10
+total10 = sum(freq10.values())
 
 # writes the frequencies to a text file
 
@@ -68,5 +56,6 @@ for key in freq10:
     result.write("\n" + key + ":" + str(freq10[key]) + "\t" + str(round(100 * freq10[key]/total10, 2)) + "%" + "\n")
 result.write('\n*** Combined ***')
 for key in freq12:
-    result.write("\n" + key + ":" + str(freq12[key] + freq10[key]) + "\t" + str(round(100 * (freq12[key] + freq10[key])/(total12 + total10), 2)) + "%" + "\n")
+    freqtot = freq12[key] + freq10[key]
+    result.write("\n" + key + ":" + str(freqtot) + "\t" + str(round(100 * freqtot/(total12 + total10), 2)) + "%" + "\n")
 result.close()
